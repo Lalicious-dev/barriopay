@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Merchants {
+  id  Int @id @default(autoincrement())
+  name String 
+  description String
+  phone String
+  walletURL String @unique
+}
+
+
+
+
+model Transaction {
+  id                  String   @id @default(cuid())
+  status              String   // pending_approval, completed, failed
+  receivingWalletId   String
+  receivingWalletAuthServer String
+  receivingWalletResourceServer String
+  sendingWalletId     String
+  sendingWalletAuthServer String
+  sendingWalletResourceServer String
+  incomingPaymentGrantAccessToken String
+  incomingPaymentGrantExpiresIn Int?
+  incomingPaymentId   String
+  incomingAmountValue String
+  incomingAmountAssetCode String
+  incomingAmountAssetScale Int
+  quoteGrantAccessToken String
+  quoteId             String
+  debitAmountValue    String
+  debitAmountAssetCode String
+  debitAmountAssetScale Int
+  outgoingPaymentGrantContinueUri String
+  outgoingPaymentGrantContinueAccessToken String
+  outgoingPaymentGrantInteractRedirect String
+  outgoingPaymentid   String?
+  redirectUrl         String
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@map("transactions")
+}
