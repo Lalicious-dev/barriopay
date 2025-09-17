@@ -1,5 +1,5 @@
 import { body } from "express-validator";
-import clientOpenPayments from "../config/openPaymentsClient.js"
+import {clientOpenPayments} from '../config/openPaymentsClient.js'
 
 export const walletsInputs = async (req, res, next) => {
   await body("receivingWalletURL")

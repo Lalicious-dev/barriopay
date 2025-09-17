@@ -3,10 +3,10 @@ import fs from "fs";
 
 const privateKey = fs.readFileSync("private.key", "utf8");
 
-export const client = await createAuthenticatedClient({
+export const clientOpenPayments = await createAuthenticatedClient({
     walletAddressUrl:"https://ilp.interledger-test.dev/ebd",
     privateKey,
     keyId:`${process.env.KEY_ID}`,
 })
 
-export default client;
+export default clientOpenPayments;
