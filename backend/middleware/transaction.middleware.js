@@ -3,8 +3,9 @@ import { prismaClient } from "../config/prismaClient.js";
 
 
 export const validateTransactionInput = async(req,res,next) => {
-    
     await body('transactionId').notEmpty().withMessage('es necesario la propiedad transactionId').bail().isString().withMessage('es necesario la propiedad transactionId').run(req);
+
+    await body('interact_ref').notEmpty().withMessage('es necesario el interact').bail().isString().withMessage('el interact_ref es obligatorio').run(req);
 
     next();
 }

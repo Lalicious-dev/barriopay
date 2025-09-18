@@ -6,11 +6,16 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Header';
 import { useState, useEffect } from 'react';
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 export function App() {
   const [currentView, setCurrentView] = useState('home');
   const [selectedMerchant, setSelectedMerchant] = useState(null);
   const [merchants, setMerchants] = useState([]);
+  const [mostrarForm, setMostrarForm] = useState(false);
+  
 
   // 1. Crea una función para cargar los datos.
   const fetchMerchants = async () => {
@@ -30,6 +35,44 @@ export function App() {
   useEffect(() => {
     fetchMerchants();
   }, []);
+
+  useEffect(() => {
+  async function completeTransaction() {
+    const params = new URLSearchParams(window.location.search);
+    const interact_ref = params.get("interact_ref");
+    const transactionId = localStorage.getItem("transactionId");
+
+    if (interact_ref && transactionId) {
+      try {
+        const result = await fetch("http://localhost:3000/api/complete-payment", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            transactionId,
+            interact_ref
+          })
+        });
+
+        const resultData = await result.json();
+        console.log(resultData);
+
+        if(resultData.message == "Transacción Completada") {
+          setMostrarForm(true);
+        }
+
+        // Limpia storage cuando ya no lo necesites
+        localStorage.removeItem("transactionId");
+      } catch (error) {
+        console.error("Error enviando a backend:", error);
+      }
+    }
+  }
+
+  completeTransaction();
+  }, []);
+  
 
   const handleViewDetails = (name) => {
     // 💡 Esta es la lógica que faltaba.
@@ -113,6 +156,18 @@ export function App() {
           // 3. Pasa fetchMerchants como una prop llamada onRegisterSuccess.
           <MerchantRegisterForm onBack={handleBackToHome} onRegisterSuccess={fetchMerchants} />
         )}
+
+        {mostrarForm && (
+        <div className="overlay">
+          <div className="modal">
+            <button className="close-button" onClick={() => setMostrarForm(false)}>X</button>
+            <div className='divTransaction'>
+              <FontAwesomeIcon icon={faCircleCheck} style={{ fontSize: "4rem", color: "green" }}  />
+            </div>
+            <h2 className='divTransactionp'>Transacción Completada</h2>
+          </div>
+        </div>
+      )}
         
       </main>
 

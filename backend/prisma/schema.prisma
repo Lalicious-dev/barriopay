@@ -50,6 +50,7 @@ model Transaction {
   outgoingPaymentGrantInteractRedirect String
   outgoingPaymentid   String?
   redirectUrl         String
+  nonce               String 
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 

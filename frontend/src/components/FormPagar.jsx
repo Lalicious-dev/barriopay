@@ -35,7 +35,6 @@ const FormPago = ({name, setMostrarForm, urlWallet }) => {
             return
         }
 
-        console.log(data);
         
         const request = await fetch('http://localhost:3000/api/incoming-payment', {
             method: 'POST',
@@ -82,7 +81,7 @@ const FormPago = ({name, setMostrarForm, urlWallet }) => {
                 id="sendingWalletURL"
                 name="sendingWalletURL"
                 placeholder="Ingrese su dirección de wallet"
-                value={data.sendingWalletUrl}
+                value={data.sendingWalletUrl}   
                 onChange={handleChange}
               />
               <span class="input-icon">👛</span>

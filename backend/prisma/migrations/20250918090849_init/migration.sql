@@ -35,6 +35,7 @@ CREATE TABLE "public"."transactions" (
     "outgoingPaymentGrantInteractRedirect" TEXT NOT NULL,
     "outgoingPaymentid" TEXT,
     "redirectUrl" TEXT NOT NULL,
+    "nonce" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

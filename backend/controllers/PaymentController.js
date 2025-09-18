@@ -84,6 +84,8 @@ export class PaymentController {
                 }    
             )
 
+            const nonce = crypto.randomUUID();
+
             //6. pedir permiso para el pago saliente
             const outgoingPaymentGrant = await clientOpenPayments.grant.request(
                 {
@@ -106,8 +108,8 @@ export class PaymentController {
                         start:['redirect'],
                           finish: {
                            method: 'redirect',
-                           uri: `http://localhost:5173/merchant&transaction=success`, // 👈 aquí regresa
-                           nonce: crypto.randomUUID()
+                           uri: `http://localhost:5173/`, // 👈 aquí regresa
+                           nonce: nonce
                         }
                     }
                 }
@@ -136,7 +138,8 @@ export class PaymentController {
                     outgoingPaymentGrantContinueUri: outgoingPaymentGrant.continue.uri,
                     outgoingPaymentGrantContinueAccessToken: outgoingPaymentGrant.continue.access_token.value,
                     outgoingPaymentGrantInteractRedirect: outgoingPaymentGrant.interact.redirect,
-                    redirectUrl: outgoingPaymentGrant.interact.redirect
+                    redirectUrl: outgoingPaymentGrant.interact.redirect,
+                    nonce: nonce
                 }
             });
 
@@ -156,11 +159,15 @@ export class PaymentController {
     static async completePayment(req,res) {
         try {
             const transaction = req.transaction;
-    
+            const interact_ref = req.body.interact_ref;
+
             const finalizarOutgoingPaymentGrant = await clientOpenPayments.grant.continue({
             url:transaction.outgoingPaymentGrantContinueUri,
             accessToken: transaction.outgoingPaymentGrantContinueAccessToken
-        })
+        }, {
+            interact_ref
+        }
+    )
 
     if(!isFinalizedGrant(finalizarOutgoingPaymentGrant)){
         throw new Error(" se espera finalice la concesion");
