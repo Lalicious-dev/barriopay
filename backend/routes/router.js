@@ -9,7 +9,7 @@ import { MerchantsController } from '../controllers/MerchantController.js';
 const router = express.Router();
 
 
-router.get('alive', (req,res) => res.send('server alive'));
+router.get('/alive', (req,res) => res.send('server alive'));
 
 // Merchants
 router.post('/createmerchant',
