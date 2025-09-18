@@ -271,7 +271,7 @@
 
 .submit-button {
   width: 100%;
-  background: linear-gradient(135deg, #28a745, #218838);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
   padding: 12px 24px;
@@ -283,7 +283,7 @@
 }
 
 .submit-button:hover:not(:disabled) {
-  background: linear-gradient(135deg, #218838, #1e7e34);
+  background: linear-gradient(135deg,  #764ba2 100%,#667eea 0%);
 }
 
 .submit-button:disabled {
@@ -986,4 +986,8 @@
    text-align: center;
    font-size: large;
    font-weight: bold;
+}
+
+.txtArea {
+  resize: none;
 }

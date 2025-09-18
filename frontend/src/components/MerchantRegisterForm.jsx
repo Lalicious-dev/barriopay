@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faSave,faHouse } from '@fortawesome/free-solid-svg-icons';
 
 // Recibe la nueva prop onRegisterSuccess.
 export function MerchantRegisterForm({ onBack, onRegisterSuccess }) {
@@ -58,7 +58,8 @@ export function MerchantRegisterForm({ onBack, onRegisterSuccess }) {
   return (
     <div className="register-form-container">
       <button onClick={onBack} className="back-button">
-        <FontAwesomeIcon icon={faArrowLeft} />
+        <FontAwesomeIcon icon={faArrowLeft} /> 
+        <FontAwesomeIcon icon={faHouse} /> 
       </button>
 
       <form onSubmit={handleSubmit} className="register-form">
@@ -72,7 +73,7 @@ export function MerchantRegisterForm({ onBack, onRegisterSuccess }) {
         
         <label>
           Descripción:
-          <textarea name="description" value={formData.description} onChange={handleChange} required></textarea>
+          <textarea class="txtArea" name="description" value={formData.description} onChange={handleChange} required></textarea>
         </label>
         
         <label>

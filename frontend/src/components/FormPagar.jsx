@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import Spinner from "./Spinner";
-
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWallet,faMoneyBill,faLock } from '@fortawesome/free-solid-svg-icons';
 const FormPago = ({name, setMostrarForm, urlWallet }) => {
 
     const [data, setData] = useState({
@@ -84,7 +84,7 @@ const FormPago = ({name, setMostrarForm, urlWallet }) => {
                 value={data.sendingWalletUrl}   
                 onChange={handleChange}
               />
-              <span class="input-icon">👛</span>
+              <span class="input-icon"><FontAwesomeIcon icon={faWallet} /> </span>
             </div>
 
             <div class="form-group">
@@ -99,7 +99,7 @@ const FormPago = ({name, setMostrarForm, urlWallet }) => {
                 value={data.amount}
                 onChange={handleChange}
               />
-              <span class="input-icon">💰</span>
+              <span class="input-icon"><FontAwesomeIcon icon={faMoneyBill} /> </span>
             </div>
 
             {loading && <><Spinner/> <p className="procesandoText">Procesando...</p></> }
@@ -111,7 +111,7 @@ const FormPago = ({name, setMostrarForm, urlWallet }) => {
           </form>
 
           <div class="security-note">
-            <p>🔒 Transacciones seguras con tecnología de encriptación</p>
+            <p><FontAwesomeIcon icon={faLock} /> Transacciones seguras con tecnología de encriptación</p>
           </div>
         </div>
       </div>
