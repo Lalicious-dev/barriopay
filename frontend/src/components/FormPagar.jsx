@@ -1,24 +1,57 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import Spinner from "./Spinner";
 
 
-const FormPago = ({name, setMostrarForm}) => {
+const FormPago = ({name, setMostrarForm, urlWallet }) => {
 
     const [data, setData] = useState({
         sendingWalletURL: '',
-        amount: ''
+        amount: '',
+        receivingWalletURL: urlWallet ? urlWallet : ""
     });
+    const [loading, setLoading] = useState(false);
+    const [redirectUrl, setRedirectUrl] = useState(null);
+    const [transactionId, setTransactionId] = useState(null);
+
+    useEffect(() => {
+    if (redirectUrl && transactionId) {
+      // Guardamos el transactionId para usarlo después
+      localStorage.setItem("transactionId", transactionId);
+
+      // Abrimos el wallet en otra pestaña
+      window.open(redirectUrl, "_blank");
+    }
+  }, [redirectUrl, transactionId]);
 
     const handleSubmit = async (e) => {
+        setLoading(true);
         e.preventDefault();
+        const {sendingWalletURL} = data;
 
-        const request = await fetch('http:localhost:3000/api/incoming-payment', {
+        if(sendingWalletURL == "" || data.amount=="" || data.receivingWalletURL==""){
+            toast.error('Todos los campos son obligatorios');
+            setLoading(false);
+            return
+        }
+
+        console.log(data);
+        
+        const request = await fetch('http://localhost:3000/api/incoming-payment', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         })
-    }
+
+         const dataR = await request.json();
+         console.log(dataR);
+         setTransactionId(dataR.transactionId);
+         setRedirectUrl(dataR.redirectUrl);
+
+         setLoading(false);
+    }   
 
     const handleChange = (e) => {
         const { value, name } = e.target;
@@ -49,7 +82,6 @@ const FormPago = ({name, setMostrarForm}) => {
                 id="sendingWalletURL"
                 name="sendingWalletURL"
                 placeholder="Ingrese su dirección de wallet"
-                required
                 value={data.sendingWalletUrl}
                 onChange={handleChange}
               />
@@ -65,12 +97,13 @@ const FormPago = ({name, setMostrarForm}) => {
                 step="0.000001"
                 placeholder="0.00"
                 min="0"
-                required
                 value={data.amount}
                 onChange={handleChange}
               />
               <span class="input-icon">💰</span>
             </div>
+
+            {loading && <><Spinner/> <p className="procesandoText">Procesando...</p></> }
 
             <button type="submit" class="submit-btn">
               <span class="btn-text">Generar Pago</span>
