@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 // Importa la imagen por defecto. Es mejor importarla directamente para que el bundler la maneje.
-import defaultImage from '/public/img/default.png'; 
+import defaultImage from '/img/default.png'; 
 
 export function Images({ image }) {
   // Estado para la fuente de la imagen. Inicialmente usa la imagen del comerciante.

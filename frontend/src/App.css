@@ -1,14 +1,37 @@
-/* Contenedor principal para las tarjetas */
+/*
+  ============================================
+  Estilos globales y de contenedores principales
+  ============================================
+*/
+
+/* Contenedor principal de la aplicación */
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contenedor principal para las tarjetas y el formulario de registro */
+.main-content {
+  flex-grow: 1; 
+  padding: 20px;
+}
+
+/*
+  ============================================
+  Estilos de la tarjeta de comercio
+  ============================================
+*/
+
 .merchantCards-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Min-width ajustado para mejor responsive */
   gap: 20px;
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-/* Modificaciones a la tarjeta */
 .merchantCard {
   background: #ffffff;
   border-radius: 16px;
@@ -20,7 +43,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Distribuye el espacio entre los elementos */
+  justify-content: space-between;
   height: 100%;
 }
 
@@ -70,21 +93,23 @@
   margin-bottom: 4px;
 }
 
-.merchantCard-payment {
+.merchantCard-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.merchantCard-actions {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.8rem;
-  color: #28a745;
-  font-weight: 500;
+  margin-top: auto;
+  width: 100%;
+  justify-content: center;
 }
 
-.merchantCard-payment::before {
-  content: "✓";
-  font-weight: bold;
-}
-
-/* Botón único */
 .merchantCard-button {
   cursor: pointer;
   border: 0;
@@ -100,33 +125,16 @@
 }
 
 .merchantCard-button:hover {
-  background: linear-gradient(135deg,  #ff1302,#ff9900,);
+  background: linear-gradient(135deg, #ff1302, #ff9900);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(255, 123, 0, 0.3);
 }
 
-/* Estructura de la tarjeta */
-.merchantCard-content {
-  /* --- CAMBIOS AQUÍ --- */
-  flex-grow: 1; /* Permite que el contenido ocupe todo el espacio disponible */
-  display: flex; /* Mantenemos este display para la estructura interna de la cabecera */
-  flex-direction: column;
-  /* --- FIN DE CAMBIOS --- */
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-.merchantCard-actions {
-  display: flex;
-  align-items: center;
-  /* --- CAMBIOS AQUÍ --- */
-  margin-top: auto; /* Empuja el elemento a la parte inferior del contenedor */
-  width: 100%; /* Asegura que el botón ocupe todo el ancho */
-  justify-content: right; /* Centra el botón si es más pequeño */
-  /* --- FIN DE CAMBIOS --- */
-}
-
+/*
+  ============================================
+  Estilos del Header (Encabezado)
+  ============================================
+*/
 
 /* Logo general (fuera del header) */
 .Logobarriopay {
@@ -136,9 +144,8 @@
   margin: 0 auto 25px auto;
 }
 
-/* Header */
 .header-container {
-  background: linear-gradient(135deg,  #ff1302,#ff9900); /* Naranja */
+  background: linear-gradient(135deg, #ff1302, #ff9900);
   padding: 15px 0;
   width: 100%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -150,494 +157,68 @@
   padding: 0 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-/* Logo dentro del header - TAMAÑO ESPECÍFICO */
-.header-content .Logobarriopay {
-  width: 300px; /* Tamaño aumentado para header */
-  margin: 0; /* Quitamos el margin para el header */
-}
-
-/* RESPONSIVE - Todas las media queries juntas al final */
-
-/* Para tablets - logo general */
-@media (max-width: 1024px) {
-  .Logobarriopay {
-    width: 180px;
-  }
-  
-  .header-content .Logobarriopay {
-    width: 250px; /* Más grande que el general en tablets */
-  }
-  
-  .header-content {
-    padding: 0 20px;
-  }
-  
-  .merchantCards-container {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  }
-}
-
-/* Para móviles */
-@media (max-width: 768px) {
-  .Logobarriopay {
-    width: 150px;
-    margin: 0 auto 20px auto;
-  }
-  
-  .header-container {
-    padding: 10px 0;
-  }
-  
-  .header-content .Logobarriopay {
-    width: 200px; /* Más grande que el general en móviles */
-  }
-  
-  .header-content {
-    padding: 0 15px;
-  }
-  
-  .merchantCards-container {
-    grid-template-columns: 1fr;
-    gap: 15px;
-    padding: 15px;
-  }
-  
-  .merchantCard-content {
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  .merchantCard-actions {
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .merchantCard-button {
-    width: 100%;
-  }
-}
-
-/* Para pantallas muy pequeñas */
-@media (max-width: 480px) {
-  .header-content .Logobarriopay {
-    width: 180px; /* Un poco más pequeño en móviles muy pequeños */
-  }
-  
-  .merchantCards-container {
-    padding: 10px;
-    gap: 12px;
-  }
-  
-  .merchantCard {
-    padding: 15px;
-  }
-  
-  .merchantCard-header {
-    flex-direction: column;
-    text-align: center;
-    gap: 8px;
-  }
-  
-  .merchantCard-avatar {
-    width: 50px;
-    height: 50px;
-  }
-}
-
-/* Estilos para skeleton loading */
-.merchantCard-skeleton {
-  pointer-events: none;
-}
-
-.merchantCard-avatar-skeleton {
-  width: 60px;
-  height: 60px;
-  border-radius: 12px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-}
-
-.merchantCard-skeleton-text {
-  height: 16px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-  border-radius: 4px;
-  margin-bottom: 8px;
-}
-
-.merchantCard-skeleton-text:first-child {
-  width: 80%;
-}
-
-.merchantCard-skeleton-text:last-child {
-  width: 60%;
-}
-
-@keyframes loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
-
-/* Merchant Detail Styles */
-.merchant-detail {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.back-button {
-  background:linear-gradient(135deg, #ff9900, #ff1302);
-  color: rgb(255, 255, 255);
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-bottom: 20px;
-  font-size: 1rem;
-}
-
-.back-button:hover {
-  background: linear-gradient(135deg,#ff1302, #ff9900);
-}
-
-.merchant-detail-card {
-  background: white;
-  border-radius: 16px;
-  padding: 30px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
-
-.merchant-detail-header {
+.header-icons {
   display: flex;
   align-items: center;
-  gap: 20px;
-  margin-bottom: 30px;
+  gap: 25px;
 }
 
-.merchant-detail-avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 16px;
-  object-fit: cover;
-  border: 3px solid #f0f0f0;
-}
-
-.merchant-detail-info h1 {
-  margin: 0;
-  color: #1a1a1a;
-  font-size: 1.8rem;
-}
-
-.merchant-detail-username {
-  color: #666;
-  font-size: 1.1rem;
-  display: block;
-  margin: 5px 0;
-}
-
-.merchant-detail-category {
-  background: #007bff;
+.header-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
   color: white;
-  padding: 6px 16px;
-  border-radius: 20px;
   font-size: 0.9rem;
-  display: inline-block;
+  transition: transform 0.2s ease;
 }
 
-.merchant-detail-section {
-  margin-bottom: 25px;
+.header-link:hover {
+  transform: scale(1.1);
 }
 
-.merchant-detail-section h3 {
-  color: #333;
-  margin-bottom: 10px;
-  font-size: 1.2rem;
+.header-link svg {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
 }
 
-.merchant-detail-section p {
-  color: #666;
-  line-height: 1.6;
-  margin: 8px 0;
-  font-size: 1rem;
-}
-
-.payment-badge {
-  background: #28a745;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 20px;
-  font-weight: 500;
-  display: inline-block;
-  margin: 10px 0;
-}
-
-.payment-button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);;
-  color: white;
-  border: none;
-  padding: 15px 30px;
-  border-radius: 12px;  
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  width: 100%;
-  margin-top: 20px;
-} 
-
-.payment-button:hover {
-      transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
-}
-
-.error {
-  text-align: center;
-  color: #dc3545;
-  font-size: 1.2rem;
-  padding: 40px;
-}
-
-/* Responsive para merchant detail */
-@media (max-width: 768px) {
-  .merchant-detail {
-    padding: 15px;
-  }
-  
-  .merchant-detail-card {
-    padding: 20px;
-  }
-  
-  .merchant-detail-header {
-    flex-direction: column;
-    text-align: center;
-    gap: 15px;
-  }
-  
-  .merchant-detail-avatar {
-    width: 80px;
-    height: 80px;
-  }
-  
-  .merchant-detail-info h1 {
-    font-size: 1.5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .merchant-detail-card {
-    padding: 15px;
-  }
-  
-  .payment-button {
-    padding: 12px 20px;
-    font-size: 1rem;
-  }
-}
-
-<<<<<<< Updated upstream
-.container {
-    width: 100%;
-    max-width: 480px;
-}
-
-/* Tarjeta de pago */
-.payment-card {
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
-}
-
-
-
-.card-header {
-    background: linear-gradient(135deg, #ff9900 0%, #ff1302 100%);
-    color: white;
-    padding: 25px 30px;
-    text-align: center;
-}
-
-.textNameForm{
-  text-align:center;
-}
-
-.card-header h2 {
-    font-weight: 600;
-    margin-bottom: 8px;
-    font-size: 24px;
-}
-
-.card-header p {
-    opacity: 0.9;
-    font-size: 14px;
-}
-
-/* Formulario */
-.payment-form {
-    padding: 30px;
-}
-
-.form-group {
-    margin-bottom: 25px;
-    position: relative;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: #4a5568;
-    font-size: 14px;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 15px 15px 15px 45px;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 16px;
-    transition: all 0.3s ease;
-    background-color: #f7fafc;
-}
-
-.form-group input:focus {
-    outline: none;
-    border-color: #4facfe;
-    box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
-    background-color: white;
-}
-
-.input-icon {
-    position: absolute;
-    left: 15px;
-    bottom: 15px;
-    font-size: 18px;
-}
-
-/* Botón de envío */
-.submit-btn {
-    width: 100%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    padding: 16px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-}
-
-.submit-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
-}
-
-.submit-btn:active {
-    transform: translateY(0);
-}
-
-.btn-icon {
-    font-size: 18px;
-    transition: transform 0.3s ease;
-}
-
-.submit-btn:hover .btn-icon {
-    transform: translateX(4px);
-}
-
-/* Nota de seguridad */
-.security-note {
-    background-color: #f8f9fa;
-    padding: 15px 30px;
-    text-align: center;
-    border-top: 1px solid #e9ecef;
-}
-
-.security-note p {
-    font-size: 13px;
-    color: #6c757d;
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-    .payment-form {
-        padding: 20px;
-    }
-    
-    .card-header {
-        padding: 20px;
-    }
-}
-
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
+.header-logo-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000; /* encima de todo */
+  justify-content: flex-end;
 }
 
-/* Caja modal */
-.modal {
-  border-radius: 12px;
-  width: 90%;
-  max-width: 500px;
-  position: relative;
-  animation: fadeIn 0.3s ease-in-out;
+.header-content .Logobarriopay {
+  width: 300px;
+  margin: 0;
 }
 
-/* Botón de cerrar */
-.close-button {
-  position: absolute;
-  top: 15px;
-  right:35px;
-  border: none;
-  background: transparent;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  color: white;
-}
+/*
+  ============================================
+  Estilos de la sección de Registro
+  ============================================
+*/
 
-/* Animación de entrada */
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-=======
-
-
-
-
-
-/* Nuevo botón para ir al registro */
 .register-container {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 15px;
   margin: 20px auto;
   max-width: 1200px;
+  color: #ff1302;
+}
+
+.register-container p {
+  margin: 0;
+  font-size: 1.1rem;
 }
 
 .register-button {
-  background: linear-gradient(135deg, #007bff, #0056b3);
+  background: linear-gradient(135deg, #ff9900, #ff1302);
   color: white;
   border: none;
   padding: 12px 24px;
@@ -648,11 +229,10 @@
 }
 
 .register-button:hover {
-  background: linear-gradient(135deg, #0056b3, #004085);
+  background: linear-gradient(135deg, #ff1302, #ff9900);
   transform: translateY(-2px);
 }
 
-/* Estilos para el formulario de registro */
 .register-form-container {
   max-width: 600px;
   margin: 20px auto;
@@ -729,5 +309,634 @@
   background-color: #f8d7da;
   color: #721c24;
   border: 1px solid #f5c6cb;
->>>>>>> Stashed changes
+}
+
+/*
+  ============================================
+  Estilos de la página de detalles
+  ============================================
+*/
+
+.merchant-detail {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.back-button {
+  background: linear-gradient(135deg, #ff9900, #ff1302);
+  color: rgb(255, 255, 255);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-size: 1rem;
+}
+
+.back-button:hover {
+  background: linear-gradient(135deg, #ff1302, #ff9900);
+}
+
+.merchant-detail-card {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.merchant-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.merchant-detail-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 3px solid #f0f0f0;
+}
+
+.merchant-detail-info h1 {
+  margin: 0;
+  color: #1a1a1a;
+  font-size: 1.8rem;
+}
+
+.merchant-detail-username {
+  color: #666;
+  font-size: 1.1rem;
+  display: block;
+  margin: 5px 0;
+}
+
+.merchant-detail-section {
+  margin-bottom: 25px;
+}
+
+.merchant-detail-section h3 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.merchant-detail-section p {
+  color: #666;
+  line-height: 1.6;
+  margin: 8px 0;
+  font-size: 1rem;
+}
+
+.payment-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 12px;  
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 20px;
+} 
+
+.payment-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+}
+
+/*
+  ============================================
+  Estilos del formulario de pago
+  ============================================
+*/
+
+.container {
+  width: 100%;
+}
+
+.payment-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.card-header {
+  background: linear-gradient(135deg, #ff9900 0%, #ff1302 100%);
+  color: white;
+  padding: 25px 30px;
+  text-align: center;
+}
+
+.textNameForm {
+  text-align: center;
+}
+
+.card-header h2 {
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 24px;
+}
+
+.card-header p {
+  opacity: 0.9;
+  font-size: 14px;
+}
+
+.payment-form {
+  padding: 30px;
+}
+
+.form-group {
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #4a5568;
+  font-size: 14px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 15px 15px 15px 45px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background-color: #f7fafc;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #4facfe;
+  box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
+  background-color: white;
+}
+
+.input-icon {
+  position: absolute;
+  left: 15px;
+  bottom: 15px;
+  font-size: 18px;
+}
+
+.submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+.btn-icon {
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+
+.submit-btn:hover .btn-icon {
+  transform: translateX(4px);
+}
+
+.security-note {
+  background-color: #f8f9fa;
+  padding: 15px 30px;
+  text-align: center;
+  border-top: 1px solid #e9ecef;
+}
+
+.security-note p {
+  font-size: 13px;
+  color: #6c757d;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+/* Contenedor principal del modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* background-color: rgba(0, 0, 0, 0.7); */ /* Eliminado o comentado */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Modal en sí */
+.modal {
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); /* Fondo más claro */
+  overflow: hidden;
+  color: rgb(0, 0, 0);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sutil sombra para destacar */
+}
+
+/* Botón de cerrar */
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  border: none;
+  background: rgba(0, 0, 0, 0.1);
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.close-button:hover {
+  background: rgba(0, 0, 0, 0.2);
+  transform: scale(1.1);
+}
+
+/* Encabezado de la tarjeta */
+.card-header {
+  padding: 25px 25px 15px;
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.card-header h2 {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.card-header p {
+  margin: 0;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+/* Formulario */
+.payment-form {
+  padding: 20px 25px;
+}
+
+.textNameForm {
+  text-align: center;
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  color: #000000;
+  font-weight: bold;
+}
+
+/* Grupos de formulario */
+.form-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000000;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 15px 12px 40px;
+  border: 1px solid rgb(138, 138, 138);
+  border-radius: 8px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(53, 53, 53);
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+.input-icon {
+  position: absolute;
+  left: 15px;
+  top: 40px;
+  font-size: 16px;
+  color: #666;
+}
+
+/* Botón de envío */
+.submit-btn {
+  width: 100%;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.submit-btn:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* Nota de seguridad */
+.security-note {
+  background: #f1f3f5;
+  padding: 15px 25px;
+  text-align: center;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.security-note p {
+  margin: 0;
+  font-size: 13px;
+  color: #000000;
+}
+
+/* Animación */
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px) scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .modal {
+    width: 95%;
+    border-radius: 12px;
+  }
+  
+  .card-header, .payment-form, .security-note {
+    padding: 15px 20px;
+  }
+  
+  .close-button {
+    top: 10px;
+    right: 15px;
+    background: #ffffff;
+  }
+}
+/*
+  ============================================
+  Estilos para Skeleton Loading
+  ============================================
+*/
+
+.merchantCard-skeleton {
+  pointer-events: none;
+}
+
+.merchantCard-avatar-skeleton {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+.merchantCard-skeleton-text {
+  height: 16px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.merchantCard-skeleton-text:first-child {
+  width: 80%;
+}
+
+.merchantCard-skeleton-text:last-child {
+  width: 60%;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/*
+  ============================================
+  Media Queries (para todas las pantallas)
+  ============================================
+*/
+
+/* Para tablets (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .Logobarriopay {
+    width: 180px;
+  }
+  
+  .header-content .Logobarriopay {
+    width: 250px;
+  }
+  
+  .header-content {
+    padding: 0 20px;
+  }
+  
+  .merchantCards-container {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+/* Para móviles (max-width: 768px) */
+@media (max-width: 768px) {
+  /* Header */
+  .header-content {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .header-logo-container {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .header-icons {
+    width: 100%;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .header-link svg {
+    font-size: 1.2rem;
+  }
+
+  /* Tarjetas */
+  .merchantCards-container {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .merchantCard-content {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .merchantCard-actions {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .merchantCard-button {
+    width: 100%;
+  }
+
+  /* Merchant Detail */
+  .merchant-detail {
+    padding: 15px;
+  }
+  
+  .merchant-detail-card {
+    padding: 20px;
+  }
+  
+  .merchant-detail-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .merchant-detail-avatar {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .merchant-detail-info h1 {
+    font-size: 1.5rem;
+  }
+  
+  /* Formulario de pago */
+  .payment-form {
+    padding: 20px;
+  }
+}
+
+/* Para pantallas muy pequeñas (max-width: 480px) */
+@media (max-width: 480px) {
+  /* Header */
+  .header-content .Logobarriopay {
+    width: 180px;
+  }
+
+  /* Contenedor de registro */
+  .register-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .register-container p {
+    font-size: 1rem;
+  }
+
+  /* Tarjetas */
+  .merchantCards-container {
+    padding: 10px;
+    gap: 12px;
+  }
+  
+  .merchantCard {
+    padding: 15px;
+  }
+  
+  .merchantCard-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+  
+  .merchantCard-avatar {
+    width: 50px;
+    height: 50px;
+  }
+
+  /* Merchant Detail */
+  .merchant-detail-card {
+    padding: 15px;
+  }
+  
+  .payment-button {
+    padding: 12px 20px;
+    font-size: 1rem;
+  }
+
+  .card-header {
+    padding: 20px;
+  }
 }

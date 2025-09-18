@@ -10,68 +10,53 @@ export function App() {
   const [selectedMerchant, setSelectedMerchant] = useState(null);
   const [merchants, setMerchants] = useState([]);
 
-  useEffect(() => {
-    const getMerchants = async () => {
-      // ... (tu código para cargar merchants)
-      try {
-        const response = await fetch(`http://localhost:3000/api/getmerchant`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setMerchants(data);
-      } catch (error) {
-        console.error("Error al cargar los merchants:", error);
+  // 1. Crea una función para cargar los datos.
+  const fetchMerchants = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/getmerchant`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    };
-    getMerchants();
+      const data = await response.json();
+      setMerchants(data);
+    } catch (error) {
+      console.error("Error al cargar los merchants:", error);
+    }
+  };
+
+  // 2. Llama a la función al montar el componente.
+  useEffect(() => {
+    fetchMerchants();
   }, []);
 
   const handleViewDetails = (name) => {
-    // ... (tu código para ver detalles)
+    // 💡 Esta es la lógica que faltaba.
     const merchant = merchants.find(m => m.name === name);
     if (merchant) {
       setSelectedMerchant(merchant);
       setCurrentView('detail');
       window.history.pushState({}, '', `/merchant/${name}`);
     }
-  }
+  };
 
   const handleBackToHome = () => {
     setCurrentView('home');
     setSelectedMerchant(null);
     window.history.pushState({}, '', '/');
-  }
+    // 4. Llama a la función de carga para refrescar los datos.
+    fetchMerchants();
+  };
 
-  // Nuevo manejador para la vista de registro
   const handleGoToRegister = () => {
     setCurrentView('register');
     window.history.pushState({}, '', '/register');
-  }
+  };
+  
 
   useEffect(() => {
-    const handlePopState = () => {
-      // ... (tu código de popstate)
-      const path = window.location.pathname;
-      if (path === '/') {
-        setCurrentView('home');
-        setSelectedMerchant(null);
-      } else if (path === '/register') {
-        setCurrentView('register');
-      } else if (path.startsWith('/merchant/')) {
-        const name = path.split('/merchant/')[1];
-        const merchant = merchants.find(m => m.name === name);
-        if (merchant) {
-          setSelectedMerchant(merchant);
-          setCurrentView('detail');
-        }
-      }
-    };
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+    // ... (código para handlePopState)
   }, [merchants]);
 
-  // Si no hay merchants, puedes mostrar un mensaje o un botón para registrar
   if (!merchants.length && currentView === 'home') {
     return (
       <div className='App'>
@@ -92,12 +77,7 @@ export function App() {
       <main className='main-content'>
         {currentView === 'home' && (
           <>
-            {/* Nuevo botón para ir a la vista de registro */}
-            <div className="register-container">
-              <button onClick={handleGoToRegister} className="register-button">
-                Registra tu comercio
-              </button>
-            </div>
+            
             <div className='merchantCards-container'>
               {merchants.map((merchant) => (
                 <MerchantCard
@@ -111,6 +91,12 @@ export function App() {
                 </MerchantCard>
               ))}
             </div>
+            <div className="register-container">
+              <p>¿No formas parte de BarrioPay? </p>
+              <button onClick={handleGoToRegister} className="register-button">
+                Registra tu comercio
+              </button>
+            </div>
           </>
         )}
 
@@ -120,11 +106,14 @@ export function App() {
             onBack={handleBackToHome}
           />
         )}
-        
+
         {currentView === 'register' && (
-          <MerchantRegisterForm onBack={handleBackToHome} />
+          // 3. Pasa fetchMerchants como una prop llamada onRegisterSuccess.
+          <MerchantRegisterForm onBack={handleBackToHome} onRegisterSuccess={fetchMerchants} />
         )}
+        
       </main>
+      
     </div>
   );
 }
