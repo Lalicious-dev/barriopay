@@ -1,8 +1,13 @@
 // components/MerchantDetail.jsx
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight, faHouse } from '@fortawesome/free-solid-svg-icons';
+import FormPago from './FormPagar';
+import { useState } from 'react';
 
 export function MerchantDetail({ merchant, onBack }) {
+
+  const [mostrarForm, setMostrarForm] = useState(false);
+
   if (!merchant) {
     return (
       <div className="merchant-detail">
@@ -48,11 +53,19 @@ export function MerchantDetail({ merchant, onBack }) {
           </div>
 
           
-          <button className="payment-button">
+          <button className="payment-button" onClick={() => setMostrarForm(true)}>
             Iniciar pago
           </button>
         </div>
       </div>
+      {mostrarForm && (
+        <div className="overlay">
+          <div className="modal">
+            <FormPago name={merchant.name} setMostrarForm={setMostrarForm}/>
+          </div>
+        </div>
+      )}
+       
     </div>
   );
 }
