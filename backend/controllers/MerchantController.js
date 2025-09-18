@@ -24,7 +24,7 @@ export class MerchantsController {
     static async getMerchant(req, res){
         try {
             const merchants = await prismaClient.merchants.findMany();
-            res.json(merchants);
+            res.status(200).json(merchants);
         }catch (error){
             res.status(500).json({message: 'Error al obtener merchants', error});
         }

@@ -4,14 +4,23 @@ import { walletsExists, walletsInputs } from '../middleware/wallet.middleware.js
 import { validateErrors } from '../middleware/validateErrors.middleware.js';
 import { PaymentController } from '../controllers/PaymentController.js';
 import { transactionExists, validateTransactionInput } from '../middleware/transaction.middleware.js';
+import { validateMerchantsInputs } from '../middleware/merchant.middleware.js';
+import { MerchantsController } from '../controllers/MerchantController.js';
 const router = express.Router();
-const MerchantsController = require("../controllers/MerchantController.js");
+
 
 router.get('alive', (req,res) => res.send('server alive'));
 
 // Merchants
-router.post('/createmerchant', MerchantsController.createMerchant);
-router.get('/getMerchant', MerchantsController.getMerchant);
+router.post('/createmerchant',
+    validateMerchantsInputs,
+    validateErrors,
+    MerchantsController.createMerchant
+);
+router.get('/getmerchant', 
+    MerchantsController.getMerchant
+);
+
 
 //Wallets
 router.get('/wallets',
