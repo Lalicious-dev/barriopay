@@ -1,11 +1,8 @@
 import './App.css';
 import { MerchantCard } from './components/MerchantCard';
 import { MerchantDetail } from './components/MerchantDetail';
-import Header from './components/Header'; // Importa el Header
+import Header from './components/Header';
 import { useState, useEffect } from 'react';
-
-
-
 
 export function App() {
   const [currentView, setCurrentView] = useState('home');
@@ -14,15 +11,22 @@ export function App() {
 
   useEffect(() => {
     const getMerchants = async () => {
-      const merchant = await fetch(`http://localhost:3000/api/getmerchant`);
-      const rest = await merchant.json();
-      
-      return rest;
-    }
+      try {
+        const response = await fetch(`http://localhost:3000/api/getmerchant`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setMerchants(data); // <-- Corrección clave aquí
+      } catch (error) {
+        console.error("Error al cargar los merchants:", error);
+      }
+    };
     
-    setMerchants(getMerchants());
-  }, []);
-  // Leer la ruta actual al cargar la aplicación
+    getMerchants(); // <-- Llamas a la función
+  }, []); // El array de dependencias vacío asegura que se ejecuta solo una vez al montar el componente
+
+  // Resto del código (no necesita cambios)
   useEffect(() => {
     const path = window.location.pathname;
     if (path.startsWith('/merchant/')) {
@@ -33,14 +37,13 @@ export function App() {
         setCurrentView('detail');
       }
     }
-  }, []);
+  }, [merchants]); // Agrega `merchants` como dependencia para que se ejecute cuando los datos estén listos.
 
   const handleViewDetails = (name) => {
     const merchant = merchants.find(m => m.name === name);
     if (merchant) {
       setSelectedMerchant(merchant);
       setCurrentView('detail');
-      // Cambiar la URL sin recargar la página
       window.history.pushState({}, '', `/merchant/${name}`);
     }
   }
@@ -51,7 +54,6 @@ export function App() {
     window.history.pushState({}, '', '/');
   }
 
-  // Manejar el botón de retroceso del navegador
   useEffect(() => {
     const handlePopState = () => {
       if (window.location.pathname === '/') {
@@ -69,15 +71,13 @@ export function App() {
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+  }, [merchants]); // Agrega `merchants` como dependencia.
 
   if (!merchants.length) return null;
 
   return (
     <div className='App'>
-      {/* Agrega el Header aquí */}
       <Header />
-
       <main className='main-content'>
         {currentView === 'home' ? (
           <div className='merchantCards-container'>
