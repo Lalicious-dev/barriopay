@@ -1,6 +1,6 @@
 import express from 'express';
 import {WalletController} from '../controllers/WalletController.js'
-import { walletsExists, walletsInputs } from '../middleware/wallet.middleware.js';
+import { walletExists, walletInput, walletsExists, walletsInputs } from '../middleware/wallet.middleware.js';
 import { validateErrors } from '../middleware/validateErrors.middleware.js';
 import { PaymentController } from '../controllers/PaymentController.js';
 import { transactionExists, validateTransactionInput } from '../middleware/transaction.middleware.js';
@@ -32,7 +32,7 @@ router.get('/wallets',
 
 //Payments
 router.post('/incoming-payment', 
-    walletsInputs,
+    walletInput,
     validateErrors,
     walletsExists,
     PaymentController.createInitialPayment

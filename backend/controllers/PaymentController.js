@@ -1,6 +1,7 @@
 import {prismaClient} from '../config/prismaClient.js';
 import {clientOpenPayments} from '../config/openPaymentsClient.js'
 import { isFinalizedGrant } from '@interledger/open-payments';
+import crypto from "crypto";
 
 export class PaymentController {
     static async createInitialPayment(req,res) {
@@ -9,6 +10,11 @@ export class PaymentController {
             const {receivingWallet, sendingWallet} = req;
             const amount =(Number(req.body.amount) * Math.pow(10, sendingWallet.assetScale)).toString();
 
+            const merchant = await prismaClient.merchants.findFirst({
+                where:{
+                    walletURL:receivingWallet.id
+                }
+            })
 
             //2. Obtener permiso o concesion para pago entrante
             const incomingPaymentGrant = await clientOpenPayments.grant.request({
@@ -97,7 +103,12 @@ export class PaymentController {
                         ]
                     },
                     interact: {
-                        start:['redirect']
+                        start:['redirect'],
+                          finish: {
+                           method: 'redirect',
+                           uri: `http://localhost:5173/merchant&transaction=success`, // 👈 aquí regresa
+                           nonce: crypto.randomUUID()
+                        }
                     }
                 }
             ) 

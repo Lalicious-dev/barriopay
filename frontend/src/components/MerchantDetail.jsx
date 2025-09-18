@@ -7,6 +7,7 @@ import FormPago from './FormPagar';
 
 export function MerchantDetail({ merchant, onBack }) {
 
+
   const [mostrarForm, setMostrarForm] = useState(false);
 
   if (!merchant) {
@@ -59,7 +60,7 @@ export function MerchantDetail({ merchant, onBack }) {
       {mostrarForm && (
         <div className="overlay">
           <div className="modal">
-            <FormPago name={merchant.name} setMostrarForm={setMostrarForm}/>
+            <FormPago name={merchant.name} urlWallet={merchant.walletURL} setMostrarForm={setMostrarForm}/>
           </div>
         </div>
       )}

@@ -23,6 +23,33 @@ export const walletsInputs = async (req, res, next) => {
     .withMessage("wallet no valida")
     .run(req);
 
+  next();
+};
+
+
+export const walletInput = async(req,res,next) => {
+  await body("sendingWalletURL")
+    .notEmpty()
+    .withMessage("walletUrl es obligatoria")
+    .bail()
+    .isString()
+    .withMessage("walletUrl no existe")
+    .bail()
+    .isURL()
+    .withMessage("wallet no valida")
+    .run(req);
+
+  await body("receivingWalletURL")
+    .notEmpty()
+    .withMessage("walletUrl es obligatoria")
+    .bail()
+    .isString()
+    .withMessage("walletUrl no existe")
+    .bail()
+    .isURL()
+    .withMessage("wallet no valida")
+    .run(req);
+
   await body("amount")
     .notEmpty()
     .withMessage("La cantidad es necesaria")
@@ -42,9 +69,35 @@ export const walletsInputs = async (req, res, next) => {
     })
     .run(req);
 
-  next();
-};
+    next()
+}
 
+export const walletExists = async (req,res,next) => {
+    try {
+    const { sendingWalletURL } = req.body;
+
+    // Verificar wallet emisora
+    let sendingWallet;
+    try {
+      sendingWallet = await clientOpenPayments.walletAddress.get({
+        url: sendingWalletURL,
+      });
+    } catch (error) {
+      return res.status(400).json({
+        error: `Wallet emisora no válida o no encontrada: ${sendingWalletURL}`,
+      });
+    }
+    req.receivingWallet = receivingWallet;
+    req.sendingWallet = sendingWallet;
+
+    next();
+  } catch (error) {
+    console.error("Error inesperado en walletsExists:", error);
+    res
+      .status(500)
+      .json({ error: "Error interno del servidor al validar wallets" });
+  }
+}
 
 export const walletsExists = async (req, res, next) => {
   try {

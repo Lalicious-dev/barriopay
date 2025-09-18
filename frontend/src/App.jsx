@@ -2,6 +2,8 @@ import './App.css';
 import { MerchantCard } from './components/MerchantCard';
 import { MerchantDetail } from './components/MerchantDetail';
 import { MerchantRegisterForm } from './components/MerchantRegisterForm'; // <-- Importa el nuevo componente
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Header';
 import { useState, useEffect } from 'react';
 
@@ -113,6 +115,18 @@ export function App() {
         )}
         
       </main>
+
+         <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       
     </div>
   );
