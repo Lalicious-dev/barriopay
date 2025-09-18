@@ -1,10 +1,14 @@
 // components/MerchantDetail.jsx
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faArrowRight, faHouse } from '@fortawesome/free-solid-svg-icons';
+
 export function MerchantDetail({ merchant, onBack }) {
   if (!merchant) {
     return (
       <div className="merchant-detail">
         <button onClick={onBack} className="back-button">
-          ← Volver
+          <FontAwesomeIcon icon={faArrowLeft} /> 
+          <FontAwesomeIcon icon={faHouse} /> 
         </button>
         <div className="error">Comercio no encontrado</div>
       </div>
@@ -14,7 +18,9 @@ export function MerchantDetail({ merchant, onBack }) {
   return (
     <div className="merchant-detail">
       <button onClick={onBack} className="back-button">
-        ← Volver
+        <FontAwesomeIcon icon={faArrowLeft} /> 
+        {"  "}
+        <FontAwesomeIcon icon={faHouse} /> 
       </button>
       
       <div className="merchant-detail-card">
