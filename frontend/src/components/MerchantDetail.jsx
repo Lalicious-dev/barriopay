@@ -1,7 +1,9 @@
 // components/MerchantDetail.jsx
 import { Images } from './Images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight, faHouse } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight, faHouse, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
+import FormPago from './FormPagar';
 
 export function MerchantDetail({ merchant, onBack }) {
 
