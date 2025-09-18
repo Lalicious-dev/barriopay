@@ -1,35 +1,105 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import { MerchantCard } from './components/MerchantCard';
+import { MerchantDetail } from './components/MerchantDetail';
+import Header from './components/Header'; // Importa el Header
+import { useState, useEffect } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+
+
+
+export function App() {
+  const [currentView, setCurrentView] = useState('home');
+  const [selectedMerchant, setSelectedMerchant] = useState(null);
+  const [merchants, setMerchants] = useState([]);
+
+  useEffect(() => {
+    const getMerchants = async () => {
+      const merchant = await fetch(`http://localhost:3000/api/getmerchant`);
+      const rest = await merchant.json();
+      
+      return rest;
+    }
+    
+    setMerchants(getMerchants());
+  }, []);
+  // Leer la ruta actual al cargar la aplicación
+  useEffect(() => {
+    const path = window.location.pathname;
+    if (path.startsWith('/merchant/')) {
+      const name = path.split('/merchant/')[1];
+      const merchant = merchants.find(m => m.name === name);
+      if (merchant) {
+        setSelectedMerchant(merchant);
+        setCurrentView('detail');
+      }
+    }
+  }, []);
+
+  const handleViewDetails = (name) => {
+    const merchant = merchants.find(m => m.name === name);
+    if (merchant) {
+      setSelectedMerchant(merchant);
+      setCurrentView('detail');
+      // Cambiar la URL sin recargar la página
+      window.history.pushState({}, '', `/merchant/${name}`);
+    }
+  }
+
+  const handleBackToHome = () => {
+    setCurrentView('home');
+    setSelectedMerchant(null);
+    window.history.pushState({}, '', '/');
+  }
+
+  // Manejar el botón de retroceso del navegador
+  useEffect(() => {
+    const handlePopState = () => {
+      if (window.location.pathname === '/') {
+        setCurrentView('home');
+        setSelectedMerchant(null);
+      } else if (window.location.pathname.startsWith('/merchant/')) {
+        const name = window.location.pathname.split('/merchant/')[1];
+        const merchant = merchants.find(m => m.name === name);
+        if (merchant) {
+          setSelectedMerchant(merchant);
+          setCurrentView('detail');
+        }
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  if (!merchants.length) return null;
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className='App'>
+      {/* Agrega el Header aquí */}
+      <Header />
 
-export default App
+      <main className='main-content'>
+        {currentView === 'home' ? (
+          <div className='merchantCards-container'>
+            {merchants.map((merchant) => (
+              <MerchantCard
+                key={merchant.id}
+                name={merchant.name}
+                description={merchant.description}
+                phone={merchant.phone}
+                onViewDetails={handleViewDetails}
+              >
+                {merchant.name}
+              </MerchantCard>
+            ))}
+          </div>
+        ) : (
+          <MerchantDetail
+            merchant={selectedMerchant}
+            onBack={handleBackToHome}
+          />
+        )}
+      </main>
+    </div>
+  );
+}
