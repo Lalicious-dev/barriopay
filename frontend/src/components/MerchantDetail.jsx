@@ -1,8 +1,7 @@
 // components/MerchantDetail.jsx
+import { Images } from './Images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight, faHouse } from '@fortawesome/free-solid-svg-icons';
-import FormPago from './FormPagar';
-import { useState } from 'react';
 
 export function MerchantDetail({ merchant, onBack }) {
 
@@ -30,11 +29,7 @@ export function MerchantDetail({ merchant, onBack }) {
       
       <div className="merchant-detail-card">
         <header className="merchant-detail-header">
-          <img
-            className="merchant-detail-avatar"
-            alt={`Avatar de ${merchant.name}`}
-            src={`https://unavatar.io/${merchant.name}`}
-          />
+          <Images image={merchant.name} />
           <div className="merchant-detail-info">
             <h1>{merchant.name}</h1>
             <span className="merchant-detail-username">@{merchant.name}</span>
@@ -44,7 +39,8 @@ export function MerchantDetail({ merchant, onBack }) {
         <div className="merchant-detail-content">
           <div className="merchant-detail-section">
             <h3>Información de contacto</h3>
-            <p>📞 {merchant.phone}</p>
+            
+            <p><FontAwesomeIcon icon={faPhone} /> {merchant.phone}</p>
           </div>
 
           <div className="merchant-detail-section">

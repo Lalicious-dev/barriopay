@@ -4,6 +4,7 @@ import { MerchantDetail } from './components/MerchantDetail';
 import Header from './components/Header';
 import { useState, useEffect } from 'react';
 
+
 export function App() {
   const [currentView, setCurrentView] = useState('home');
   const [selectedMerchant, setSelectedMerchant] = useState(null);

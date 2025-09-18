@@ -18,6 +18,10 @@
   transition: all 0.3s ease;
   width: 100%;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribuye el espacio entre los elementos */
+  height: 100%;
 }
 
 .merchantCard:hover {
@@ -61,7 +65,7 @@
 
 .merchantCard-phone {
   font-size: 0.9rem;
-  color: #007bff;
+  color: #764ba2;
   font-weight: 500;
   margin-bottom: 4px;
 }
@@ -103,21 +107,26 @@
 
 /* Estructura de la tarjeta */
 .merchantCard-content {
-  display: flex;
+  /* --- CAMBIOS AQUÍ --- */
+  flex-grow: 1; /* Permite que el contenido ocupe todo el espacio disponible */
+  display: flex; /* Mantenemos este display para la estructura interna de la cabecera */
+  flex-direction: column;
+  /* --- FIN DE CAMBIOS --- */
   justify-content: space-between;
   align-items: flex-start;
   gap: 16px;
 }
 
-.merchantCard-details {
-  flex: 1;
-  min-width: 0;
-}
-
 .merchantCard-actions {
   display: flex;
   align-items: center;
+  /* --- CAMBIOS AQUÍ --- */
+  margin-top: auto; /* Empuja el elemento a la parte inferior del contenedor */
+  width: 100%; /* Asegura que el botón ocupe todo el ancho */
+  justify-content: right; /* Centra el botón si es más pequeño */
+  /* --- FIN DE CAMBIOS --- */
 }
+
 
 /* Logo general (fuera del header) */
 .Logobarriopay {

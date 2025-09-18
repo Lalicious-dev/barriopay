@@ -1,3 +1,4 @@
+import { Images } from './Images';
 export function MerchantCard ({ children, name, description, phone, onViewDetails }) {
   
   const handleViewClick = () => {
@@ -13,15 +14,14 @@ export function MerchantCard ({ children, name, description, phone, onViewDetail
       <div className='merchantCard-content'>
         <div className='merchantCard-details'>
           <header className='merchantCard-header'>
-            <img
-              className='merchantCard-avatar'
-              alt={`Avatar de ${name}`}
-              src={`https://unavatar.io/${name}`}
-            />
+            
+            <Images image={name} />
+            
             <div className='merchantCard-info'>
               <strong>{children}</strong>
               <span className='merchantCard-infoUserName'>@{name}</span>
               <span className='merchantCard-infoUserName'>{description}</span>
+              
               {phone && <div className='merchantCard-phone'>{phone}</div>}
               
             </div>
